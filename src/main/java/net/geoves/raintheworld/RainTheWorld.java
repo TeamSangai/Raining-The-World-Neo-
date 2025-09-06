@@ -1,6 +1,7 @@
 package net.geoves.raintheworld;
 
 import net.geoves.raintheworld.item.ModItems;
+import net.geoves.raintheworld.payloads.DietPayloadReciever;
 import net.geoves.raintheworld.payloads.records.DietRecord;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
@@ -32,7 +33,7 @@ public class RainTheWorld {
         registrar.playToClient(
                 DietRecord.DIET_TYPE,
                 DietRecord.STREAM_CODEC,
-
+                DietPayloadReciever::recievePayload
         )
         }
 

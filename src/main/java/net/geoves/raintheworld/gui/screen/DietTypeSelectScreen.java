@@ -32,7 +32,7 @@ public class DietTypeSelectScreen extends Screen {
         this.guiTop = (this.height - windowHeight) / 2;
     }
 
-    protected DietTypeSelectScreen(Component title) {
+    public DietTypeSelectScreen(Component title) {
         super(title);
     }
 }
