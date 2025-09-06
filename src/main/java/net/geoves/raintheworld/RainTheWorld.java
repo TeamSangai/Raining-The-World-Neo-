@@ -1,21 +1,14 @@
 package net.geoves.raintheworld;
 
+import net.geoves.raintheworld.item.ModItems;
+import net.geoves.raintheworld.payloads.records.DietRecord;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
@@ -25,16 +18,23 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
-import net.neoforged.neoforge.registries.DeferredBlock;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(RainTheWorld.MODID)
 public class RainTheWorld {
     public static final String MODID = "raintheworldgeoves";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static class ModEventsBus
+
+        @SubscribeEvent
+        public static void registerPayloads(final RegisterPayloadHandlersEvent event){
+        final  PayloadRegistrar registrar = event.registrar("1");
+        registrar.playToClient(
+                DietRecord.DIET_TYPE,
+                DietRecord.STREAM_CODEC,
+
+        )
+        }
 
     public RainTheWorld(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
@@ -42,6 +42,8 @@ public class RainTheWorld {
         // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
         // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
         NeoForge.EVENT_BUS.register(this);
+
+        ModItems.register(modEventBus);
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
@@ -56,12 +58,20 @@ public class RainTheWorld {
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-
+        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.DIETSELECTITEM);
+        }
     }
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
+    }
+
+    @SubscribeEvent // on the mod event bus
+    public static void register(final RegisterPayloadHandlersEvent event) {
+        // Sets the current network version
+        final PayloadRegistrar registrar = event.registrar("1");
     }
 }
