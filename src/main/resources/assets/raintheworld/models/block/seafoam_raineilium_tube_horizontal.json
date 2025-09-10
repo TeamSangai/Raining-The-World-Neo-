@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "raintheworld:block/seafoam_raineilium_tube_top",
+    "side": "raintheworld:block/seafoam_raineilium_tube_side"
+  }
+}

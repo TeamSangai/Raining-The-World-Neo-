@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "raintheworld:block/seafoam_raineilium_nematocyst"
+  }
+}

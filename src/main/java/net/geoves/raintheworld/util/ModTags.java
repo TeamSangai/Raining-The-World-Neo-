@@ -8,8 +8,13 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
+import java.util.stream.Stream;
+
 public class ModTags {
     public static class Blocks {
+
+        public static final TagKey<Block> SEAFOAM_RAINEILIUMS = createTag("seafoam_raineiliums");
+        public static final TagKey<Block> SUNDEW_MAY_PLACE_ON = createTag("sundew_may_place_on");
 
         private static TagKey<Block> createTag(String name) {
             return BlockTags.create(ResourceLocation.fromNamespaceAndPath(RainTheWorld.MODID, name));

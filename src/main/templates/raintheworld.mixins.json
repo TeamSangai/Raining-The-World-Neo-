@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "net.geoves.raintheworld.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "DietSystemMixin"
+  ],
+  "client": [
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

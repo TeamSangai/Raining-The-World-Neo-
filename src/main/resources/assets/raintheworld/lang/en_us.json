@@ -1,13 +1,20 @@
 {
-  "itemGroup.examplemod": "Example Mod Tab",
-  "block.examplemod.example_block": "Example Block",
-  "item.examplemod.example_item": "Example Item",
 
-  "examplemod.configuration.title": "Example Mod Configs",
-  "examplemod.configuration.section.examplemod.common.toml": "Example Mod Configs",
-  "examplemod.configuration.section.examplemod.common.toml.title": "Example Mod Configs",
-  "examplemod.configuration.items": "Item List",
-  "examplemod.configuration.logDirtBlock": "Log Dirt Block",
-  "examplemod.configuration.magicNumberIntroduction": "Magic Number Text",
-  "examplemod.configuration.magicNumber": "Magic Number"
+  "block.raintheworld.seafoam_raineilium_stone_block": "Stony Seafoam Raineilium",
+  "block.raintheworld.seafoam_raineilium_mud_block": "Mudy Seafoam Raineilium",
+  "block.raintheworld.seafoam_raineilium_tuft": "Seafoam Raineilium Tuft",
+  "block.raintheworld.seafoam_raineilium_tube": "Seafoam Raineilium Tube",
+  "block.raintheworld.seafoam_planks": "Seafoam Planks",
+  "block.raintheworld.seafoam_raineilium_nematocyst": "Seafoam Raineilium Nematocyst",
+  "block.raintheworld.seafoam_raineilium_polyp": "Seafoam Raineilium Polyp",
+  "block.raintheworld.weed_worm_crop": "Weed Worm",
+  "block.raintheworld.abyssal_sundew": "Abyssal Sundew",
+
+  "item.raintheworld.gray_cloak": "Gray Cloak",
+  "item.raintheworld.weed_larva": "Weed Larva",
+  "item.raintheworld.cooked_weed_larva": "Cooked Weed Larva",
+  "item.raintheworld.weed_worm": "Weed Worm",
+  "item.raintheworld.cooked_weed_worm": "Cooked Weed Worm",
+  "item.raintheworld.sundew_seed": "Sundew Seed",
+  "item.raintheworld.bugmeal": "Bugmeal"
 }

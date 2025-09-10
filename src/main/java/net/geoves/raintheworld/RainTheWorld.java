@@ -1,8 +1,13 @@
 package net.geoves.raintheworld;
 
+import net.geoves.raintheworld.block.ModBlocks;
 import net.geoves.raintheworld.item.ModItems;
-import net.geoves.raintheworld.payloads.DietPayloadReciever;
+import net.geoves.raintheworld.payloads.DietPayloadReceiver;
 import net.geoves.raintheworld.payloads.records.DietRecord;
+import net.geoves.raintheworld.util.ModDataAttachments;
+import net.geoves.raintheworld.worldgen.biome.ModTerrablender;
+import net.geoves.raintheworld.worldgen.biome.surface.ModSurfaceRuleData;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 import org.slf4j.Logger;
@@ -19,23 +24,16 @@ import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import terrablender.api.SurfaceRuleManager;
 
 // The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(RainTheWorld.MODID)
 public class RainTheWorld {
-    public static final String MODID = "raintheworldgeoves";
+    public static final String MODID = "raintheworld";
     public static final Logger LOGGER = LogUtils.getLogger();
-    public static class ModEventsBus
 
-        @SubscribeEvent
-        public static void registerPayloads(final RegisterPayloadHandlersEvent event){
-        final  PayloadRegistrar registrar = event.registrar("1");
-        registrar.playToClient(
-                DietRecord.DIET_TYPE,
-                DietRecord.STREAM_CODEC,
-                DietPayloadReciever::recievePayload
-        )
-        }
+
+
 
     public RainTheWorld(IEventBus modEventBus, ModContainer modContainer) {
         // Register the commonSetup method for modloading
@@ -45,7 +43,10 @@ public class RainTheWorld {
         NeoForge.EVENT_BUS.register(this);
 
         ModItems.register(modEventBus);
+        ModBlocks.register(modEventBus);
 
+        ModDataAttachments.register(modEventBus);
+        ModTerrablender.registerBiomes();
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
 
@@ -54,25 +55,56 @@ public class RainTheWorld {
     }
 
     private void commonSetup(FMLCommonSetupEvent event) {
-
+    event.enqueueWork(() -> {
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, MODID, ModSurfaceRuleData.makeRules());
+    });
     }
 
     // Add the example block item to the building blocks tab
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if(event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.DIETSELECTITEM);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
+            event.accept(ModBlocks.SEAFOAM_PLANKS);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.FOOD_AND_DRINKS) {
+            event.accept(ModItems.WEED_LARVA);
+            event.accept(ModItems.COOKED_WEED_LARVA);
+            event.accept(ModItems.WEED_WORM);
+            event.accept(ModItems.COOKED_WEED_WORM);
+            event.accept(ModItems.BUGMEAL);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+            event.accept(ModItems.GRAY_CLOAK);
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
+            event.accept(ModBlocks.SEAFOAM_RAINEILIUM_STONE_BLOCK);
+            event.accept(ModBlocks.SEAFOAM_RAINEILIUM_TUFT);
+            event.accept(ModBlocks.SEAFOAM_RAINEILIUM_TUBE);
+            event.accept(ModBlocks.SEAFOAM_RAINEILIUM_NEMATOCYST);
+            event.accept(ModBlocks.SEAFOAM_RAINEILIUM_POLYP);
+
+            event.accept(ModItems.SUNDEW_SEED);
         }
     }
 
+    @EventBusSubscriber(modid = MODID)
+    public static class ModEventsBus {
+        @SubscribeEvent
+        public static void registerPayloads(final RegisterPayloadHandlersEvent event){
+            final PayloadRegistrar registrar=event.registrar("1");
+            registrar.playToServer( DietRecord.DIET_TYPE, DietRecord.STREAM_CODEC,
+                    DietPayloadReceiver::receivePayload);
+        }
+    }
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
-    }
-
-    @SubscribeEvent // on the mod event bus
-    public static void register(final RegisterPayloadHandlersEvent event) {
-        // Sets the current network version
-        final PayloadRegistrar registrar = event.registrar("1");
     }
 }

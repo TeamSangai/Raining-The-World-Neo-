@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "raintheworld:block/seafoam_raineilium_tube_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "raintheworld:block/seafoam_raineilium_tube"
+    },
+    "axis=z": {
+      "model": "raintheworld:block/seafoam_raineilium_tube_horizontal",
+      "x": 90
+    }
+  }
+}

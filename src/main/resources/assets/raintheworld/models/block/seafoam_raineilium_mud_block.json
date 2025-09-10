@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "minecraft:block/mud",
+    "side": "raintheworld:block/seafoam_raineilium_mud",
+    "top": "raintheworld:block/seafoam_raineilium_top"
+  }
+}
